@@ -36,7 +36,7 @@ func (s *StepVerifySharedImageDestination) Run(ctx context.Context, state multis
 	}
 
 	imageURI := fmt.Sprintf("/subscriptions/%s/resourcegroup/%s/providers/Microsoft.Compute/galleries/%s/images/%s",
-		azcli.SubscriptionID(),
+		s.Image.Subscription,
 		s.Image.ResourceGroup,
 		s.Image.GalleryName,
 		s.Image.ImageName,
@@ -45,7 +45,7 @@ func (s *StepVerifySharedImageDestination) Run(ctx context.Context, state multis
 	ui.Say(fmt.Sprintf("Validating that shared image %s exists",
 		imageURI))
 
-	image, err := azcli.GalleryImagesClient().Get(ctx,
+	image, err := azcli.GalleryImagesClient(s.Image.Subscription).Get(ctx,
 		s.Image.ResourceGroup,
 		s.Image.GalleryName,
 		s.Image.ImageName)
@@ -87,7 +87,7 @@ func (s *StepVerifySharedImageDestination) Run(ctx context.Context, state multis
 		to.String(image.ID),
 		to.String(image.Location)))
 
-	versions, err := azcli.GalleryImageVersionsClient().ListByGalleryImageComplete(ctx,
+	versions, err := azcli.GalleryImageVersionsClient(s.Image.Subscription).ListByGalleryImageComplete(ctx,
 		s.Image.ResourceGroup,
 		s.Image.GalleryName,
 		s.Image.ImageName)

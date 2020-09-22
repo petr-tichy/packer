@@ -47,12 +47,12 @@ func (m *AzureClientSetMock) VirtualMachinesClient() computeapi.VirtualMachinesC
 }
 
 // GalleryImagesClient returns a GalleryImagesClientAPI
-func (m *AzureClientSetMock) GalleryImagesClient() computeapi.GalleryImagesClientAPI {
+func (m *AzureClientSetMock) GalleryImagesClient(subscription string) computeapi.GalleryImagesClientAPI {
 	return m.GalleryImagesClientMock
 }
 
 // GalleryImageVersionsClient returns a GalleryImageVersionsClientAPI
-func (m *AzureClientSetMock) GalleryImageVersionsClient() computeapi.GalleryImageVersionsClientAPI {
+func (m *AzureClientSetMock) GalleryImageVersionsClient(subscription string) computeapi.GalleryImageVersionsClientAPI {
 	return m.GalleryImageVersionsClientMock
 }
 

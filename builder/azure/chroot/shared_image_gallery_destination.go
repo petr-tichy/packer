@@ -11,6 +11,7 @@ import (
 // SharedImageGalleryDestination models an image version in a Shared
 // Image Gallery that can be used as a destination.
 type SharedImageGalleryDestination struct {
+	Subscription  string `mapstructure:"subscription" required:"false"`
 	ResourceGroup string `mapstructure:"resource_group" required:"true"`
 	GalleryName   string `mapstructure:"gallery_name" required:"true"`
 	ImageName     string `mapstructure:"image_name" required:"true"`
@@ -33,6 +34,9 @@ type TargetRegion struct {
 
 // ResourceID returns the resource ID string
 func (sigd SharedImageGalleryDestination) ResourceID(subscriptionID string) string {
+	if sigd.Subscription != "" {
+		subscriptionID = sigd.Subscription
+	}
 	return fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Compute/galleries/%s/images/%s/versions/%s",
 		subscriptionID,
 		sigd.ResourceGroup,

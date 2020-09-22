@@ -19,8 +19,8 @@ type AzureClientSet interface {
 	SnapshotsClient() computeapi.SnapshotsClientAPI
 	ImagesClient() computeapi.ImagesClientAPI
 
-	GalleryImagesClient() computeapi.GalleryImagesClientAPI
-	GalleryImageVersionsClient() computeapi.GalleryImageVersionsClientAPI
+	GalleryImagesClient(subscription string) computeapi.GalleryImagesClientAPI
+	GalleryImageVersionsClient(subscription string) computeapi.GalleryImageVersionsClientAPI
 
 	VirtualMachinesClient() computeapi.VirtualMachinesClientAPI
 	VirtualMachineImagesClient() VirtualMachineImagesClientAPI
@@ -111,15 +111,15 @@ func (s azureClientSet) VirtualMachineImagesClient() VirtualMachineImagesClientA
 	return VirtualMachineImagesClient{c}
 }
 
-func (s azureClientSet) GalleryImagesClient() computeapi.GalleryImagesClientAPI {
-	c := compute.NewGalleryImagesClient(s.subscriptionID)
+func (s azureClientSet) GalleryImagesClient(subscription string) computeapi.GalleryImagesClientAPI {
+	c := compute.NewGalleryImagesClient(subscription)
 	s.configureAutorestClient(&c.Client)
 	c.PollingDelay = s.PollingDelay
 	return c
 }
 
-func (s azureClientSet) GalleryImageVersionsClient() computeapi.GalleryImageVersionsClientAPI {
-	c := compute.NewGalleryImageVersionsClient(s.subscriptionID)
+func (s azureClientSet) GalleryImageVersionsClient(subscription string) computeapi.GalleryImageVersionsClientAPI {
+	c := compute.NewGalleryImageVersionsClient(subscription)
 	s.configureAutorestClient(&c.Client)
 	c.PollingDelay = s.PollingDelay
 	return c

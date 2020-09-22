@@ -77,7 +77,7 @@ func (s *StepCreateSharedImageVersion) Run(ctx context.Context, state multistep.
 		imageVersion.GalleryImageVersionProperties.StorageProfile.DataDiskImages = &datadisks
 	}
 
-	f, err := azcli.GalleryImageVersionsClient().CreateOrUpdate(
+	f, err := azcli.GalleryImageVersionsClient(s.Destination.Subscription).CreateOrUpdate(
 		ctx,
 		s.Destination.ResourceGroup,
 		s.Destination.GalleryName,

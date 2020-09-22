@@ -49,7 +49,7 @@ func (s *StepVerifySharedImageSource) Run(ctx context.Context, state multistep.S
 	ui.Say(fmt.Sprintf("Validating that shared image version %q exists",
 		s.SharedImageID))
 
-	version, err := azcli.GalleryImageVersionsClient().Get(ctx,
+	version, err := azcli.GalleryImageVersionsClient(resource.Subscription).Get(ctx,
 		resource.ResourceGroup,
 		resource.ResourceName[0],
 		resource.ResourceName[1],
@@ -88,7 +88,7 @@ func (s *StepVerifySharedImageSource) Run(ctx context.Context, state multistep.S
 	}
 
 	imageResource, _ := resource.Parent()
-	image, err := azcli.GalleryImagesClient().Get(ctx,
+	image, err := azcli.GalleryImagesClient(resource.Subscription).Get(ctx,
 		resource.ResourceGroup,
 		resource.ResourceName[0],
 		resource.ResourceName[1])
